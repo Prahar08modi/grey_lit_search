@@ -175,17 +175,19 @@ def save_google_search(url, webpage_text, base_dir="output"):
         fid.write(webpage_text)
 
 
-def search_and_download(url, results=100):  # pragma: no cover
+def search_and_download(url, program, project, doc, results=100):  # pragma: no cover
     search_time = f"{datetime.utcnow():%Y%m%d_%H%M%S}"
-    webpage = get_webpage(url, results=results, base_dir=search_time)
+    base_nested_dir = program + "/" + project + "/" + doc
+    print(base_nested_dir)
+    webpage = get_webpage(url, results=results, base_dir=base_nested_dir)
     if "scholar.google" in url:
         search = "scholar"
     else:
         search = "google"
 
     for indx, search in enumerate(get_search_results(webpage, search=search)):
-        results_summary(indx, search.title, search.primary_link, base_dir=search_time)
+        results_summary(indx, search.title, search.primary_link, base_dir=base_nested_dir)
         if search.do_download:
-            save_pdf(indx, search.primary_link, base_dir=search_time)
+            save_pdf(indx, search.primary_link, base_dir=base_nested_dir)
         else:
-            save_link(indx, search.primary_link, base_dir=search_time)
+            save_link(indx, search.primary_link, base_dir=base_nested_dir)
