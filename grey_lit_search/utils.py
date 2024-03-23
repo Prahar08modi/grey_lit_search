@@ -64,7 +64,7 @@ def save_pdf(search_num, link, base_dir="output", timeout=60):
     based on the search number
     """
 
-    save_dir = os.path.join(base_dir, f"{str(search_num).zfill(3)}")
+    save_dir = os.path.join(base_dir)
     os.makedirs(save_dir, exist_ok=True)
     fname = os.path.join(save_dir, os.path.basename(link))
     logger.info(f"attempting to download {fname}")
