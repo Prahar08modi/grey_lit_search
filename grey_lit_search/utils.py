@@ -178,8 +178,13 @@ def save_google_search(url, webpage_text, base_dir="output"):
 
 def search_and_download(url, program, project, doc, results=100):  # pragma: no cover
     search_time = f"{datetime.utcnow():%Y%m%d_%H%M%S}"
-    base_nested_dir = program + "/" + project + "/" + doc
     
+    project_words = project.split()[:7]
+    # Join the first 7 words to form the trimmed project name
+    trimmed_project = ' '.join(project_words)
+
+    base_nested_dir = program + "/" + trimmed_project + "/" + doc
+
     pattern = r'[:*?"<>|]'
     cleaned_base_dir = re.sub(pattern, '', base_nested_dir)
 
